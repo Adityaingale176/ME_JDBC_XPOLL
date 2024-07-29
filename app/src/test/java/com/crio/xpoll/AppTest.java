@@ -5,6 +5,7 @@ import com.crio.xpoll.dao.ResponseDAO;
 import com.crio.xpoll.dao.UserDAO;
 import com.crio.xpoll.model.Poll;
 import com.crio.xpoll.model.PollSummary;
+import com.crio.xpoll.model.Response;
 import com.crio.xpoll.model.User;
 import com.crio.xpoll.util.DatabaseConnection;
 import com.crio.xpoll.util.DatabaseSetup;
@@ -91,10 +92,12 @@ public class AppTest {
         List<String> choices = Arrays.asList("Option 1", "Option 2", "Option 3");
         Poll poll = pollDAO.createPoll(user.getUserId(), "Sample Question", choices);
 
-        responseDAO.createResponse(poll.getId(), poll.getChoices().get(0).getId(), user.getUserId());
+        Response response = responseDAO.createResponse(poll.getId(), poll.getChoices().get(1).getId(), user.getUserId());
 
-        List<PollSummary> summaries = pollDAO.getPollSummaries(poll.getId());
-        assertEquals(1, summaries.get(0).getResponseCount());
+        assertNotNull(response);
+        assertEquals(1, response.getPollId());
+        assertEquals(2, poll.getChoices().get(1).getId());
+        assertEquals(1, response.getUserId());
     }
 
     @Test
