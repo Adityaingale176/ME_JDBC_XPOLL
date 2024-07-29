@@ -61,7 +61,7 @@ public class PollDAO {
      * @throws SQLException If a database error occurs during the update.
      */
     public void closePoll(int pollId) throws SQLException {
-        return null;
+        return;
     }
 
     /**

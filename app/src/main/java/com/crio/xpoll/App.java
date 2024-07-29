@@ -30,9 +30,6 @@ public class App {
     private static final String GREEN = "\033[0;32m";   // GREEN
     private static final String RED = "\033[0;31m"; // RED
 
-    private App() {
-    }
-
     private static Scanner scanner = new Scanner(System.in);
     private static DatabaseConnection dbConnection;
     private static UserDAO userDAO;
