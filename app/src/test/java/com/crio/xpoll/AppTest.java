@@ -17,11 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -34,7 +36,7 @@ public class AppTest {
     private PollDAO pollDAO;
     private ResponseDAO responseDAO;
 
-    @BeforeEach
+    @BeforeAll
     public void setupDatabase() throws SQLException {
         // Load properties from application.properties
         Properties properties = new Properties();
@@ -64,6 +66,16 @@ public class AppTest {
         }
         // Setup the database
         DatabaseSetup.executeSQLScript(databaseConnection);
+    }
+
+    @BeforeEach
+    public void resetDatabase() throws SQLException {
+        try (Connection conn = databaseConnection.getConnection()) {
+            conn.createStatement().execute("DELETE FROM responses");
+            conn.createStatement().execute("DELETE FROM choices");
+            conn.createStatement().execute("DELETE FROM polls");
+            conn.createStatement().execute("DELETE FROM users");
+        }
     }
 
     @Test
