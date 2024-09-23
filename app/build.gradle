@@ -26,6 +26,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'mysql:mysql-connector-java:8.0.33'
+
+	implementation 'org.springframework:spring-context:5.3.20'
+
 }
 
 application {
